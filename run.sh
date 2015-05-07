@@ -1,18 +1,20 @@
 #!/bin/bash
 
 
-ES_IP_ADDRESS='localhost'
 echo "check if this is a new container" 
-
 if [[ ! -f /.UPDATED ]] 
 then
+  echo "this is a New deployment"
   echo "update config"
-  echo " sed /kb/config/kibana.yml $ES_IP_ADDRESS"
-  
+  echo ""
+  sed -i "s|\(elasticsearch_url:\s\).*|\1\"http://${ES_IP_ADDRESS}:9200\"|" /kb/config/kibana.yml
+  echo " the ElasticSearch address is http://${ES_IP_ADDRESS}:9200"
+  echo ""
   touch /.UPDATED
 else 
-  echo "already updated"   
+  echo "already updated, lets get started!"   
 fi
+echo ""
 
 # run kibana
 /kb/bin/kibana 
