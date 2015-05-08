@@ -25,7 +25,10 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 COPY run.sh /
 RUN chmod +x /run.sh
 
-
+# add a time stamp
+COPY set-time.sh /
+RUN chmod +x /set-time.sh
+RUN /set-time.sh
 
 # Volume config for a custom kibana.yml 
 VOLUME ['/kb/config']
